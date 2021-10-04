@@ -1,52 +1,55 @@
 class LiveVehicleTrackingModel {
-  double lat;
-  double lng;
-  int speed;
-  double refDist;
-  String refLoc;
-  String accStatus;
-  String recDateTime;
-  String driver;
-  double temperature;
-  String imoblize;
+  final double lat;
+  final double lng;
+  final int speed;
+  final double refDist;
+  final String refLoc;
+  final String accStatus;
+  final String recDateTime;
+  final String driver;
+  final double temperature;
+  final String imoblize;
 
-  LiveVehicleTrackingModel(
-      {this.lat,
-        this.lng,
-        this.speed,
-        this.refDist,
-        this.refLoc,
-        this.accStatus,
-        this.recDateTime,
-        this.driver,
-        this.temperature,
-        this.imoblize});
+  const LiveVehicleTrackingModel({
+    this.lat,
+    this.lng,
+    this.speed,
+    this.refDist,
+    this.refLoc,
+    this.accStatus,
+    this.recDateTime,
+    this.driver,
+    this.temperature,
+    this.imoblize,
+  });
 
-  LiveVehicleTrackingModel.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    lng = json['lng'];
-    speed = json['speed'];
-    refDist = json['refDist'];
-    refLoc = json['refLoc'];
-    accStatus = json['accStatus'];
-    recDateTime = json['recDateTime'];
-    driver = json['driver'];
-    temperature = json['temperature'];
-    imoblize = json['Imoblize'];
+  factory LiveVehicleTrackingModel.fromJson(Map<String, dynamic> map) {
+    return LiveVehicleTrackingModel(
+      lat: map['lat'],
+      lng: map['lng'],
+      speed: map['speed'],
+      refDist: map['refDist'],
+      refLoc: map['refLoc'],
+      accStatus: map['accStatus'],
+      recDateTime: map['recDateTime'],
+      driver: map['driver'],
+      temperature: map['temperature'],
+      imoblize: map['imoblize'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lng'] = lng;
-    data['speed'] = speed;
-    data['refDist'] = refDist;
-    data['refLoc'] = refLoc;
-    data['accStatus'] = accStatus;
-    data['recDateTime'] = recDateTime;
-    data['driver'] = driver;
-    data['temperature'] = temperature;
-    data['Imoblize'] = imoblize;
-    return data;
+    return {
+      'lat': lat,
+      'lng': lng,
+      'speed': speed,
+      'refDist': refDist,
+      'refLoc': refLoc,
+      'accStatus': accStatus,
+      'recDateTime': recDateTime,
+      'driver': driver,
+      'temperature': temperature,
+      'imoblize': imoblize,
+    };
   }
 }

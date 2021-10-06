@@ -4,10 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:maps_learning/live_vehicle_tracking_model.dart';
-import 'package:provider/provider.dart';
 
-import 'selected_item/selected_item.dart';
-import 'selected_item/selected_item_notifier.dart';
+import 'selected_item.dart';
 
 class VMap extends StatefulWidget {
   const VMap({Key key}) : super(key: key);
@@ -19,17 +17,18 @@ class VMap extends StatefulWidget {
 class _VMapState extends State<VMap> {
   final _mapController = Completer<GoogleMapController>();
   final Set<Marker> _allMarker = {};
+  NestedScrollViewHeaderSliversBuilder item;
 
   Future<List<dynamic>> loadString() async {
-    var response = await http.get(Uri.parse(
-        'http://125.209.77.54:8181/ios/locationVehLiveTracking/JV-7391/KrvpjgKAQyTJlfz05Urijw=='));
+    // var response = await http.get(Uri.parse(
+    //     'http://125.209.77.54:8181/ios/locationVehLiveTracking/JV-7391/KrvpjgKAQyTJlfz05Urijw=='));
 
-    // const response = '''[
-    //   {"lat":40.712280,"lng":-74.005174},
-    //   {"lat":40.712674,"lng":-74.007819}
-    //   ]''';
+    const response = '''[
+      {"lat":40.712280,"lng":-74.005174},
+      {"lat":40.712674,"lng":-74.007819}
+      ]''';
 
-    final List<dynamic> jsonMap = jsonDecode(response.body);
+    final List<dynamic> jsonMap = jsonDecode(response);
     return jsonMap;
   }
 
@@ -42,12 +41,6 @@ class _VMapState extends State<VMap> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: _buildMap(context),
-          ),
-          const Positioned(
-            bottom: 0,
-            left: 1,
-            right: 1,
-            child: SelectedItem(),
           ),
         ],
       ),
@@ -72,7 +65,10 @@ class _VMapState extends State<VMap> {
               markerId: MarkerId(i.toString()),
               position: LatLng(model.lat, model.lng),
               onTap: () {
-                context.read<SelectedItemNotifier>().setSelectedItem(model);
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => SelectedItem(item: model),
+                );
               },
             ),
           );
